@@ -1,0 +1,100 @@
+{
+  "format": "pivo-onnx-v1",
+  "trained": true,
+  "language": "he",
+  "config": {
+    "width": 256,
+    "ff_width": 896,
+    "heads": 8,
+    "kv_heads": 4,
+    "head_dim": 32,
+    "text_layers": 6,
+    "decoder_layers": 4,
+    "kernel": 7,
+    "duration_width": 128,
+    "feature_dim": 20,
+    "attention_window": 96,
+    "max_token_frames": 200,
+    "num_voices": 16,
+    "sample_rate": 16000,
+    "hop_length": 160,
+    "max_utterance_frames": 3000,
+    "phoneme_phase": true
+  },
+  "parameters": {
+    "components": {
+      "acoustic": {
+        "parameters": 6511317
+      },
+      "vocoder": {
+        "parameters": 816597
+      }
+    },
+    "total_parameters": 7327914,
+    "provisional_name": "PiVo-TPU-7M-Hebrew-v3"
+  },
+  "symbols": [
+    "<pad>",
+    "<bos>",
+    "<eos>",
+    "<space>",
+    ".",
+    ",",
+    "?",
+    "!",
+    ";",
+    ":",
+    "ˈ",
+    "a",
+    "e",
+    "i",
+    "o",
+    "u",
+    "b",
+    "v",
+    "d",
+    "h",
+    "z",
+    "χ",
+    "t",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "s",
+    "f",
+    "p",
+    "ts",
+    "tʃ",
+    "w",
+    "ʔ",
+    "ɡ",
+    "ʁ",
+    "ʃ",
+    "ʒ",
+    "dʒ"
+  ],
+  "voices": {
+    "Shaul": 0
+  },
+  "feature_schema": "opus-fargan-20-v1",
+  "preemphasis": 0.85,
+  "cache_names": [
+    "key0",
+    "value0",
+    "key1",
+    "value1",
+    "key2",
+    "value2",
+    "key3",
+    "value3"
+  ],
+  "step_state_names": [
+    "memory",
+    "gru1",
+    "gru2",
+    "gru3",
+    "frame_state"
+  ]
+}

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f3efe6" />
+  <meta name="description" content="A 7.3M-parameter Hebrew text-to-speech model running live in your browser." />
+  <title>PiVo Hebrew v3 · Hebrew speech in your browser</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%97%A3%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<main class="shell">
+  <nav>
+    <span class="brand"><span>Pi</span><span>Vo</span><small>עברית</small></span>
+    <a class="source" href="https://huggingface.co/empero-ai/PiVo-1.4M" target="_blank" rel="noreferrer">Original PiVo model ↗</a>
+  </nav>
+
+  <section class="hero">
+    <p class="eyebrow">7.3M parameters · Hebrew · in your browser</p>
+    <h1>Small model.<br /><em>Hebrew voice.</em></h1>
+    <p class="intro">PiVo-TPU-7M Hebrew v3: an experimental Hebrew text-to-speech model trained on a Kaggle TPU, based on the PiVo recipe. Live synthesis runs on your device with WebAssembly; nothing is sent to a server.</p>
+  </section>
+
+  <section class="studio" aria-labelledby="studio-title">
+    <div class="studio-top">
+      <div><p class="step">01 / LIVE IN YOUR BROWSER</p><h2 id="studio-title">What should it say?</h2></div>
+      <span id="counter"></span>
+    </div>
+    <p class="hint">Pick an example or type your own Hebrew. The first run downloads about 41 MB (model plus runtime; typed text adds 5 MB for the vowel model), then the browser caches it.</p>
+    <div id="chips" class="chips"></div>
+    <textarea id="text" dir="rtl" lang="he" rows="3" maxlength="400"></textarea>
+    <div class="controls">
+      <label class="field">Voice
+        <select id="voice"></select>
+      </label>
+      <label class="speed-control" for="speed"><span>Speed <output id="speed-value">1.0×</output></span>
+        <input id="speed" type="range" min="0.7" max="1.4" value="1" step="0.05" /></label>
+      <button id="speak" type="button"><span class="button-icon" aria-hidden="true">▶</span><span class="button-label">Generate speech</span></button>
+    </div>
+    <div id="status" class="status" role="status" aria-live="polite"><span class="status-dot"></span><span>Ready. The model loads on your first generation.</span></div>
+    <div id="player" class="player" hidden>
+      <audio id="audio" controls playsinline></audio>
+      <a id="download" download="pivo-hebrew.wav">Download WAV</a>
+      <p id="ipa" class="ipa"></p>
+    </div>
+  </section>
+
+  <section class="gallery">
+    <p class="step">02 / CUSTOM TEXT, UNSEEN IN TRAINING</p>
+    <h2>New sentences the model never heard</h2>
+    <p class="hint">Written for this demo and checked against the SASPEECH transcripts we could access; none appear there. Pre-rendered MP3s, so they play anywhere.</p>
+    <div id="custom" class="cards"></div>
+  </section>
+
+  <section class="gallery">
+    <p class="step">03 / REAL SPEECH VS V3</p>
+    <h2>Same text, human vs model</h2>
+    <div id="compare" class="cards"></div>
+  </section>
+
+  <section class="gallery">
+    <p class="step">04 / MORE SAMPLES</p>
+    <h2>Test sentences, voices and a news memo</h2>
+    <div id="more" class="cards"></div>
+  </section>
+
+  <section class="about">
+    <p class="step">05 / ABOUT</p>
+    <ul>
+      <li><b>Model:</b> PiVo-TPU-7M Hebrew v3: 6,511,317 acoustic + 816,597 FARGAN vocoder parameters (7,327,914 total). ONNX files on device: 29.5 MB (float32).</li>
+      <li><b>Training:</b> about 11.5 h of Hebrew speech (SASPEECH), 20-dim FARGAN features at 16 kHz, trained on a Kaggle TPU v5e-8.</li>
+      <li><b>Text:</b> example sentences were phonemized with <a href="https://github.com/thewh1teagle/phonikud">Phonikud</a> (CC BY 4.0). Typed text uses Horse Nikud for vowel marks plus a JavaScript port of Phonikud's rules (CC BY 4.0), so stress on typed text is approximate.</li>
+      <li><b>Limits:</b> an experimental research model: some speech sounds muffled or buzzy, pitch is fairly flat, and commas get short pauses. Numbers should be written as words.</li>
+    </ul>
+    <p class="credits">Based on <a href="https://huggingface.co/empero-ai/PiVo-1.4M">PiVo-1.4M</a> by Empero Research (Apache-2.0; FARGAN vocoder under the Xiph/Opus BSD license, see <a href="model/NOTICE">NOTICE</a>, <a href="model/THIRD_PARTY.md">THIRD_PARTY.md</a>). Page design inspired by <a href="https://github.com/ldenoue/PiVo-1.4M-web">ldenoue/PiVo-1.4M-web</a>. Runs on <a href="https://onnxruntime.ai/">ONNX Runtime Web</a>. Reference recordings from <a href="https://huggingface.co/datasets/upai-inc/saspeech">SASPEECH</a>. Hebrew vowel marks: Powered by Horse Models (<a href="https://2008-horse.com/licensing/">https://2008-horse.com/licensing/</a>), non-commercial use, <a href="vendor/horse-nikud/LICENSE">license</a>.</p>
+  </section>
+  <footer><p>Live inference · WebAssembly · 16 kHz model audio</p></footer>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>

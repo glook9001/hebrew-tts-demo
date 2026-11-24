@@ -1,0 +1,236 @@
+{
+ "authorization": "LOCAL_INTERNAL_EXPORT_AND_VALIDATION",
+ "code_commit": "b212228c41a0637eecbb17a05426e3126799c8a7",
+ "created_utc": "2026-11-10T05:20:25Z",
+ "encoder_sha256": "e8400eac9f7571c9fc0665d41361bf7e702517f4bf1422fe2170521df6b5f566",
+ "export": null,
+ "exporter_sha256": "883fe2131f663949592087c0bdb75d8f329aafedc3ff578b55c888068630bc56",
+ "external_data": [],
+ "files": {
+  "model.onnx": {
+   "bytes": 5410365,
+   "sha256": "5f230a6903bd5544fc50cc3dd14eac97b97bd70f214e23edf40594e394b3e875"
+  },
+  "vocab.json": {
+   "bytes": 5910,
+   "sha256": "1fab6ff4670debaf9be91f0c282f646f935b84a227adbbb94a07e285b7e1361c"
+  }
+ },
+ "format": "int8",
+ "io_contract": {
+  "inputs": [
+   {
+    "dtype": "int64",
+    "name": "char_inputs",
+    "shape": [
+     "batch",
+     "seq"
+    ]
+   },
+   {
+    "dtype": "int64",
+    "name": "diac_inputs",
+    "shape": [
+     "batch",
+     "seq"
+    ]
+   },
+   {
+    "dtype": "int64",
+    "name": "input_lengths",
+    "shape": [
+     "batch"
+    ]
+   }
+  ],
+  "note": "the last dimension of logits is 85 (checked on every call; the graph may leave it symbolic); diac_inputs is 1 at every position for unpointed text; input_lengths equals the sequence width (batch 1, no padding) in the formal evaluation",
+  "outputs": [
+   {
+    "dtype": "uint8",
+    "name": "predictions",
+    "shape": [
+     "batch",
+     "seq"
+    ]
+   },
+   {
+    "dtype": "float32",
+    "name": "logits",
+    "shape": [
+     "batch",
+     "seq",
+     85
+    ]
+   }
+  ]
+ },
+ "max_positions": 240,
+ "model_config": {
+  "conv_kernel": 5,
+  "d_model": 256,
+  "dropout": 0.2,
+  "ffn": 1024,
+  "heads": 4,
+  "layers": 6
+ },
+ "model_config_sha256": "2d995cf1863150ec4648c6e285c5ccf67a67b235bec9b9165b80519420dc5e05",
+ "model_source_sha256": "f34427b7049bb3bee907d4e82ac991cd2266079e58bae9322d7c7c171960dea1",
+ "phase": "S3_HLD_LOCAL_ARTIFACT_VALIDATION",
+ "protocol_plan_digest": "c879aea297093beb22de283682fad7989c473f99e911f87ccfa017158edc4fa2",
+ "providers": [
+  "CPUExecutionProvider"
+ ],
+ "quantization": {
+  "api": "onnxruntime.quantization.quantize_dynamic",
+  "calibration": "none (dynamic quantisation: activations are quantised at run time; no calibration data of any set is used)",
+  "op_types_to_quantize": [
+   "MatMul"
+  ],
+  "per_channel": false,
+  "reduce_range": false,
+  "runs": 1,
+  "seconds": 0.55,
+  "source_fp32_bytes": 19556073,
+  "source_fp32_sha256": "06256b7335d9bcda1f06fe5389d7dbf4dbc13471eaa9c7e6a08cce1c120d893c",
+  "weight_type": "QInt8"
+ },
+ "runtime_checks": {
+  "contract_problems": [],
+  "dynamic_length_runs": {
+   "1": {
+    "max_probability_sum_deviation": 1.3553653843700886e-07,
+    "ok": true
+   },
+   "2": {
+    "max_probability_sum_deviation": 1.6955891624093056e-07,
+    "ok": true
+   },
+   "240": {
+    "max_probability_sum_deviation": 3.9424048736691475e-07,
+    "ok": true
+   },
+   "37": {
+    "max_probability_sum_deviation": 2.475571818649769e-07,
+    "ok": true
+   }
+  },
+  "forward_passes": 4,
+  "providers": [
+   "CPUExecutionProvider"
+  ]
+ },
+ "schema": "S3-HLD-ART-ARTIFACT-1",
+ "seed": 20261001,
+ "signature_in_file": {
+  "inputs": [
+   {
+    "dtype": "int64",
+    "name": "char_inputs",
+    "shape": [
+     "batch",
+     "seq"
+    ]
+   },
+   {
+    "dtype": "int64",
+    "name": "diac_inputs",
+    "shape": [
+     "batch",
+     "seq"
+    ]
+   },
+   {
+    "dtype": "int64",
+    "name": "input_lengths",
+    "shape": [
+     "batch"
+    ]
+   }
+  ],
+  "outputs": [
+   {
+    "dtype": "uint8",
+    "name": "predictions",
+    "shape": [
+     "batch",
+     "seq"
+    ]
+   },
+   {
+    "dtype": "float32",
+    "name": "logits",
+    "shape": [
+     "batch",
+     "seq",
+     85
+    ]
+   }
+  ]
+ },
+ "source_checkpoint": {
+  "file": "last.pt",
+  "params": 4862293,
+  "path": "runs/nk-s3-lsp-l6-seed20261001/last.pt",
+  "sha256": "66de49bbefea47a52676b986712f1ca0f60d99211886af449f7b466a9af76860",
+  "step": 26000
+ },
+ "status": "COMPLETE",
+ "structure": {
+  "checker": "passed",
+  "ir_version": 8,
+  "node_count": 890,
+  "op_counts": {
+   "Add": 83,
+   "ArgMax": 1,
+   "Cast": 39,
+   "Concat": 29,
+   "Constant": 259,
+   "ConstantOfShape": 5,
+   "Conv": 2,
+   "Cos": 1,
+   "Div": 27,
+   "DynamicQuantizeLinear": 25,
+   "Equal": 4,
+   "Erf": 7,
+   "Expand": 6,
+   "Gather": 19,
+   "GreaterOrEqual": 1,
+   "MatMul": 12,
+   "MatMulInteger": 25,
+   "Mul": 107,
+   "Pow": 14,
+   "Range": 6,
+   "ReduceMean": 28,
+   "Reshape": 28,
+   "ScatterND": 2,
+   "Shape": 27,
+   "Sin": 1,
+   "Slice": 24,
+   "Softmax": 7,
+   "Sqrt": 14,
+   "Sub": 14,
+   "Transpose": 26,
+   "Unsqueeze": 36,
+   "Where": 11
+  },
+  "opset_imports": {
+   "ai.onnx": 15
+  },
+  "producer": "onnx.quantize 0.1.0"
+ },
+ "tool_versions": {
+  "numpy": "2.0.2",
+  "onnx": "1.19.1",
+  "onnxruntime": "1.19.2",
+  "psutil": "7.2.2",
+  "python": "3.9.6",
+  "torch": "2.8.0"
+ },
+ "total_bytes_declared_files": 5416275,
+ "vocab": {
+  "classes": 85,
+  "file": "vocab.json",
+  "max_len": 240,
+  "sha256": "1fab6ff4670debaf9be91f0c282f646f935b84a227adbbb94a07e285b7e1361c"
+ }
+}
