@@ -4,7 +4,7 @@ Live demo: https://glook9001.github.io/hebrew-tts-demo/
 
 An experimental 7.3M-parameter Hebrew TTS model (**PiVo-TPU-7M Hebrew v3**: 6,511,317 acoustic + 816,597 FARGAN vocoder parameters), trained on a Kaggle TPU v5e-8 with about 11.5 h of SASPEECH Hebrew speech, following the [PiVo-1.4M](https://huggingface.co/empero-ai/PiVo-1.4M) recipe by Empero Research.
 
-The page runs the four ONNX graphs (29.5 MB, float32) live in a Web Worker with ONNX Runtime Web. No server is involved. It also has pre-rendered MP3 samples, including sentences written for the demo that do not appear in the training transcripts.
+The page runs the four ONNX graphs (29.5 MB, float32) live in a Web Worker with ONNX Runtime Web. No server is involved. It also has pre-rendered MP3 samples (all made with the current front-end), including sentences written for the demo that do not appear in the training transcripts.
 
 ## How text becomes speech
 1. **Cleaning and reading out.** `frontend/text.js` normalizes the text (quotes, dashes, parentheses, ellipses, invisible marks) and reads out numbers (cardinals up to the billions with gender agreement, decimals, percentages, ₪/$/€ amounts, dates like 15.3.2025, times like 14:30, prefixed forms like ב-12%), common abbreviations (ד"ר, ש"ח, צה"ל, ארה"ב, …) and Latin-script words (a small brand and tech dictionary, spelled-out acronyms, and a rough spelling-to-sound fallback). Numbers are in `frontend/numbers.js`, Latin words in `frontend/english.js`.
@@ -29,3 +29,6 @@ The page runs the four ONNX graphs (29.5 MB, float32) live in a Web Worker with 
 - ONNX Runtime Web: Microsoft, MIT.
 
 This is a research demo. Some speech sounds muffled or buzzy, and pitch is fairly flat. The front-end cannot fix the acoustic model's voice quality or its even pacing inside a phrase. About 1 word in 8 can still be mispronounced, especially names, slang and rare loanwords.
+
+## Snapshot
+This is the frozen v3 demo: the PiVo-TPU-7M v3 acoustic model with the ReNikud front-end, git tag `v3-frontend-renikud`. A copy is kept at https://glook9001.github.io/hebrew-tts-demo/v3/ so this link keeps working after a new model replaces the main page.

@@ -65,7 +65,7 @@ button.onclick = () => {
 };
 
 for (const e of ex.custom) card($('#custom'), { title: `Unseen text · voice ${e.voice}`, text: e.text, src: `audio/${e.id}.mp3` });
-card($('#long'), { title: 'Monologue · voice 0 · 26 s', text: ex.avocado.text, src: 'audio/avocado_v0.mp3' });
+card($('#long'), { title: 'Monologue · voice 0 · 31 s', text: ex.avocado.text, src: 'audio/avocado_v0.mp3' });
 const R4 = 'הרמת מסך מעל סבך של אינטרסים בעולם התקשורת הישראלית.', R8 = 'ובסוף יעשה את זה עורך הדין בועז בן צור, שהוא עורך הדין של נתניהו.', TA = 'היום בבוקר מזג האוויר נעים בתל אביב ובירושלים.';
 card($('#compare'), { title: 'Real recording', text: R4, src: 'audio/ref4_real.mp3' });
 card($('#compare'), { title: 'v3 model', text: R4, src: 'audio/ref4_v3_v0.mp3' });
@@ -73,5 +73,5 @@ card($('#compare'), { title: 'Real recording', text: R8, src: 'audio/ref8_real.m
 card($('#compare'), { title: 'v3 model', text: R8, src: 'audio/ref8_v3_v0.mp3' });
 card($('#compare'), { title: 'Older v2 model', text: TA, src: 'audio/telaviv_v2.mp3' });
 card($('#compare'), { title: 'v3 model', text: TA, src: 'audio/telaviv_v3_release.mp3' });
-card($('#more'), { title: 'News memo · 22 s', text: 'עדכון קצר על אנבידיה. בשבעה עשר בנובמבר דיווחה החברה על הכנסות שיא של מאה וחמישה עשר נקודה שמונה מיליארד דולר ברבעון השלישי…', src: 'audio/memo_nvidia_v0.mp3' });
+card($('#more'), { title: 'News memo · 25 s', text: 'עדכון קצר על אנבידיה. בשבעה עשר בנובמבר דיווחה החברה על הכנסות שיא של מאה וחמישה עשר נקודה שמונה מיליארד דולר ברבעון השלישי…', src: 'audio/memo_nvidia_v0.mp3' });
 for (const e of ex.test.filter((e) => !e.id.startsWith('memo') && [0, 9].includes(e.voice))) card($('#more'), { title: `${e.label} · voice ${e.voice}`, text: e.text, src: `audio/${e.id}.mp3` });
