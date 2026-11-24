@@ -87,27 +87,89 @@ function wav(samples, rate) {
   return b;
 }
 
-async function synth({ text, ipa, voice, speed }, progress) {
-  const t0 = performance.now();
-  let nikud = null;
-  if (!ipa) {
-    if (!/[\u05d0-\u05ea]/.test(text)) throw new Error('Type some Hebrew text.');
-    const nk = await loadNikud(progress); progress('Adding vowel marks…');
-    const lines = text.split(/(?<=[.!?])\s+|\n+/).map((l) => l.trim()).filter(Boolean);
-    const out = []; for (const l of lines) out.push(/[\u05b0-\u05c7]/.test(l) ? l : await nk.diacritize(l));
-    nikud = out.join(' '); ipa = phonemize(nikud, { predictVocalShva: true });
+let lexP;
+const loadLex = () => (lexP ??= fetch(BASE + 'lexicon.json').then((r) => r.json()).catch(() => ({})));
+const rawWord = (w) => w.replace(/[\u0591-\u05c7|]/g, '').replace(/[^\u05d0-\u05ea]/g, '');
+
+export function normalizeText(text) {
+  return text.replace(/[\u200e\u200f\u202a-\u202e]/g, '').replace(/…/g, '...').replace(/[“”„״]/g, '"').replace(/[‘’׳`]/g, "'")
+    .replace(/\s*[–—]\s*/g, ', ').replace(/\.{2,}/g, ',').replace(/[;:]/g, ',').replace(/[()\[\]{}«»"]/g, ' ')
+    .replace(/[ \t]+/g, ' ').replace(/\s+([,.!?])/g, '$1').replace(/,(\s*,)+/g, ',').replace(/([.!?])\1+/g, '$1').trim();
+}
+export function splitChunks(text, maxWords = 22) {
+  const sents = text.split(/(?<=[.!?])\s+|\n+/).map((x) => x.trim()).filter(Boolean);
+  const out = [];
+  for (const s of sents) {
+    const w = s.split(' ');
+    if (w.length <= maxWords) { out.push(s); continue; }
+    let cur = [];
+    for (const tok of w) { cur.push(tok); if ((cur.length >= 8 && /,$/.test(tok)) || cur.length >= maxWords) { out.push(cur.join(' ')); cur = []; } }
+    if (cur.length) out.push(cur.join(' '));
   }
-  const s = await loadModel(progress);
+  return out;
+}
+
+
+const U = ['ʔˈefes', 'ʔaχˈat', 'ʃtˈajim', 'ʃalˈoʃ', 'ʔaʁbˈa', 'χamˈeʃ', 'ʃˈeʃ', 'ʃˈeva', 'ʃmˈone', 'tˈeʃa'];
+const UC = ['', 'ʔaχˈat', 'ʃtˈem', 'ʃlˈoʃ', 'ʔaʁbˈa', 'χamˈeʃ', 'ʃˈeʃ', 'ʃvˈa', 'ʃmˈone', 'teʃˈa'];
+const TENS = ['', 'ʔˈeseʁ', 'ʔesʁˈim', 'ʃloʃˈim', 'ʔaʁbaʔˈim', 'χamiʃˈim', 'ʃiʃˈim', 'ʃivʔˈim', 'ʃmonˈim', 'tiʃʔˈim'];
+const HUND = ['', 'mˈeʔa', 'matˈajim', 'ʃlˈoʃ meʔˈot', 'ʔaʁbˈa meʔˈot', 'χamˈeʃ meʔˈot', 'ʃˈeʃ meʔˈot', 'ʃvˈa meʔˈot', 'ʃmˈone meʔˈot', 'tʃˈa meʔˈot'];
+const THOU = ['', 'ʔˈelef', 'ʔalpˈajim', 'ʃlˈoʃet ʔalafˈim', 'ʔaʁbˈaʔat ʔalafˈim', 'χamˈeʃet ʔalafˈim', 'ʃˈeʃet ʔalafˈim', 'ʃivʔˈat ʔalafˈim', 'ʃmonˈat ʔalafˈim', 'tiʃʔˈat ʔalafˈim'];
+const ve = (w) => 've' + w.replace(/^ʔ/, 'ʔ');
+function below100(n) {
+  if (n < 10) return U[n];
+  if (n === 10) return TENS[1];
+  if (n < 20) return `${UC[n - 10]} ʔesʁˈe`;
+  return n % 10 ? `${TENS[Math.floor(n / 10)]} ${ve(U[n % 10])}` : TENS[n / 10];
+}
+function numberIpa(n) {
+  if (!Number.isFinite(n) || n < 0 || n > 9999) return null;
+  const parts = []; const th = Math.floor(n / 1000), h = Math.floor(n / 100) % 10, r = n % 100;
+  if (th) parts.push(THOU[th]); if (h) parts.push(HUND[h]);
+  if (r || !parts.length) parts.push(r ? below100(r) : U[0]);
+  if (parts.length > 1) { const last = parts.pop(); parts.push(last.includes(' ') && !/^(ʃlˈoʃ|ʔaʁbˈa|χamˈeʃ|ʃˈeʃ|ʃvˈa|ʃmˈone|tʃˈa|ʃivʔˈat|ʃmonˈat|tiʃʔˈat|ʃlˈoʃet|ʔaʁbˈaʔat|χamˈeʃet|ʃˈeʃet)/.test(last) ? last : ve(last)); }
+  return parts.join(' ');
+}
+const PREF = { 'ב': 'be', 'ל': 'le', 'ה': 'ha', 'מ': 'mi', 'ו': 've', 'ש': 'ʃe', 'כ': 'ke' };
+function numberToken(t) {
+  const m = t.match(/^([^\d\u05d0-\u05ea]*)([בלהמושכ]?)-?(\d+)([^\d]*)$/); if (!m) return null;
+  const ipa = numberIpa(Number(m[3])); if (!ipa) return null;
+  const punct = (x) => x.replace(/[^.,!?]/g, '');
+  return punct(m[1]) + (m[2] ? PREF[m[2]] : '') + ipa + punct(m[4]);
+}
+
+// Phonikud lexicon first (stress and vowels from the real Phonikud model), Horse Nikud + rules for the rest.
+async function textToIpa(chunk, progress) {
+  const lex = await loadLex();
+  const toks = chunk.split(' ');
+  const misses = toks.some((t) => !/\d/.test(t) && rawWord(t) && !(rawWord(t) in lex) && !/[\u05b0-\u05c7]/.test(t));
+  let nikToks = toks;
+  if (misses) {
+    const nk = await loadNikud(progress);
+    const plain = toks.map((t) => t.replace(/[^\u05d0-\u05ea\s.,!?'-]/g, '')).join(' ').replace(/\s+/g, ' ').trim();
+    const nikud = plain ? await nk.diacritize(plain) : '';
+    const nt = nikud.split(' ');
+    nikToks = nt.length === toks.length ? nt : null;
+    if (!nikToks) return phonemize(nikud, { predictVocalShva: true });
+  }
+  return toks.map((t, i) => {
+    if (/\d/.test(t)) { const n = numberToken(t); if (n) return n; }
+    const r = rawWord(t); if (!r) return t.replace(/[^.,!?]/g, '');
+    const lead = (t.match(/^[^\u05d0-\u05ea]*/)[0] || '').replace(/[^.,!?]/g, ''), trail = (t.match(/[^\u05d0-\u05ea\u0591-\u05c7']*$/)[0] || '').replace(/[^.,!?]/g, '');
+    if (r in lex && !/[\u05b0-\u05c7]/.test(t)) return lead + lex[r] + trail;
+    return phonemize(nikToks[i], { predictVocalShva: true });
+  }).join(' ').replace(/\s+/g, ' ').trim();
+}
+
+async function synthOne(s, ipa, voice, speed) {
   const tk = tokens(ipa); const ids = tk.map((x) => S2I[x]);
-  if (ids.length > 600) throw new Error('Text too long; try one or two sentences.');
-  progress('Predicting timing…');
   const enc = await s.encoder.run({ tokens: I64(ids, [1, ids.length]), voice: I64([voice], [1]), lengths: I64([ids.length], [1]) });
   const [E, LD] = s.encoder.outputNames.map((n) => enc[n]);
   const W = E.dims.at(-1), maxF = meta.config.max_token_frames;
   const durs = Array.from(LD.data, (v, i) => { let d = Math.round(Math.expm1(Math.max(0, Math.min(Math.log1p(maxF), v))) / speed); d = Math.max(0, Math.min(maxF, d)); if (ids[i] >= SPECIAL) d = Math.max(1, d); if (ids[i] <= 2) d = 0; return d; });
-  const F = durs.reduce((a, b) => a + b, 0); if (F > 3000) throw new Error('Speech would exceed 30 s; shorten the text.');
+  const F = Math.min(3000, durs.reduce((a, b) => a + b, 0));
   const XW = W + 4, X = new Float32Array(F * XW); let f = 0;
-  for (let i = 0; i < durs.length; i++) for (let r = 0; r < durs[i]; r++, f++) {
+  for (let i = 0; i < durs.length && f < F; i++) for (let r = 0; r < durs[i] && f < F; r++, f++) {
     X.set(E.data.subarray(i * W, (i + 1) * W), f * XW); const fr = (r + 0.5) / durs[i];
     X.set([2 * fr - 1, Math.sin(Math.PI * fr), Math.cos(Math.PI * fr), Math.log1p(durs[i]) / Math.log1p(maxF)], f * XW + W);
   }
@@ -123,7 +185,6 @@ async function synth({ text, ipa, voice, speed }, progress) {
     for (let i = 0; i < c; i++) feats.push(outs[0].data.slice(i * 20, i * 20 + 20));
   }
   for (let t = 0; t < F; t++) {
-    if (t % 25 === 0) progress(`Generating audio… ${Math.round(t / F * 100)}%`);
     const prev = feats[Math.max(0, t - 1)], cur = feats[t], next = feats[Math.min(F - 1, t + 1)];
     const ctx = new Float32Array(60); ctx.set(prev); ctx.set(cur, 20); ctx.set(next, 40);
     const per = [prev, cur, next].map((x) => Math.max(32, Math.min(255, Math.round(256 / 2 ** (Math.max(-10, Math.min(10, x[18])) + 1.5)))));
@@ -136,10 +197,35 @@ async function synth({ text, ipa, voice, speed }, progress) {
       for (const x of go[0].data) { de = x + 0.85 * de; pcm[o++] = de; }
     }
   }
-  const audio = pcm.subarray(0, o); let peak = 0; for (const x of audio) peak = Math.max(peak, Math.abs(x));
+  return pcm.subarray(0, o);
+}
+
+async function synth({ text, ipaChunks, voice, speed }, progress) {
+  const t0 = performance.now();
+  let chunks = ipaChunks;
+  if (!chunks) {
+    const clean = normalizeText(text || '');
+    if (!/[\u05d0-\u05ea]/.test(clean)) throw new Error('Type some Hebrew text.');
+    const parts = splitChunks(clean);
+    if (parts.length > 40) throw new Error('That is a lot of text; try up to about 40 sentences.');
+    progress('Reading the text…');
+    chunks = [];
+    for (const p of parts) { const ipa = await textToIpa(p, progress); if (/[a-zʔʃʁχˈ]/.test(ipa)) chunks.push(ipa); }
+    if (!chunks.length) throw new Error('Nothing speakable found in that text.');
+  }
+  const s = await loadModel(progress);
+  const pieces = []; let total = 0;
+  for (let i = 0; i < chunks.length; i++) {
+    progress(chunks.length > 1 ? `Speaking part ${i + 1} of ${chunks.length}…` : 'Generating audio…');
+    const pcm = await synthOne(s, chunks[i], voice, speed);
+    const gapSec = i === chunks.length - 1 ? 0 : (/[.!?]\s*$/.test(chunks[i]) ? 0.35 : 0.2);
+    pieces.push(pcm, new Float32Array(Math.round(16000 * gapSec))); total += pcm.length + Math.round(16000 * gapSec);
+  }
+  const audio = new Float32Array(total); let o = 0; for (const p of pieces) { audio.set(p, o); o += p.length; }
+  let peak = 0; for (const x of audio) peak = Math.max(peak, Math.abs(x));
   if (peak > 0.95) for (let i = 0; i < audio.length; i++) audio[i] *= 0.9 / peak;
-  const secs = o / 16000, took = (performance.now() - t0) / 1000;
-  return { wav: wav(upsample3(audio), 48000), seconds: secs, took, ipa, nikud };
+  const up = upsample3(audio);
+  return { wav: wav(up, 48000), seconds: audio.length / 16000, took: (performance.now() - t0) / 1000, ipa: chunks.join(' ') };
 }
 
 self.onmessage = async ({ data }) => {

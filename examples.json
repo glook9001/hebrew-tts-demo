@@ -4,43 +4,55 @@
    "id": "custom_phone_v0",
    "text": "הטלפון שלי התעדכן הלילה, ועכשיו הסוללה מחזיקה כמעט יומיים.",
    "voice": 0,
-   "ipa": "hatˈelefon ʃelˈi hitʔadkˈen halˈajla, veʔaχʃˈav hasollˈa maχazikˈa kimʔˈat jomajˈim.",
-   "dur": 3.73
+   "dur": 3.73,
+   "chunks": [
+    "hatˈelefon ʃelˈi hitʔadkˈen halˈajla, veʔaχʃˈav hasollˈa maχazikˈa kimʔˈat jomajˈim."
+   ]
   },
   {
    "id": "custom_shuk_v1",
    "text": "בשבת בבוקר אכלנו שקשוקה חריפה בשוק הכרמל, והתור היה ארוך במיוחד.",
    "voice": 1,
-   "ipa": "beʃabˈat babˈokeʁ ʔaχˈalnu ʃakʃˈuka χaʁifˈa beʃˈuk hakaʁmˈel, vehatˈoʁ hajˈa ʔaʁˈoχ bimjuχˈad.",
-   "dur": 4.66
+   "dur": 4.66,
+   "chunks": [
+    "beʃabˈat babˈokeʁ ʔaχˈalnu ʃakʃˈuka χaʁifˈa beʃˈuk hakaʁmˈel, vehatˈoʁ hajˈa ʔaʁˈoχ bimjuχˈad."
+   ]
   },
   {
    "id": "custom_browser_v4",
    "text": "מודל הדיבור הזה אומן על שבבים של גוגל, ועכשיו הוא מדבר ישירות מתוך הדפדפן שלך.",
    "voice": 4,
-   "ipa": "mˈodel hadibˈuʁ hazˈe ʔumˈan ʔˈal ʃvavˈim ʃˈel ɡˈuɡel, veʔaχʃˈav hˈu medabˈeʁ jeʃiʁˈot mitˈoχ hadafdfˈan ʃelχˈa.",
-   "dur": 5.39
+   "dur": 5.39,
+   "chunks": [
+    "mˈodel hadibˈuʁ hazˈe ʔumˈan ʔˈal ʃvavˈim ʃˈel ɡˈuɡel, veʔaχʃˈav hˈu medabˈeʁ jeʃiʁˈot mitˈoχ hadafdfˈan ʃelχˈa."
+   ]
   },
   {
    "id": "custom_rain_v9",
    "text": "אם ירד גשם מחר, נדחה את הטיול לכנרת לשבוע הבא.",
    "voice": 9,
-   "ipa": "ʔˈim jeʁˈad ɡˈeʃem maχˈaʁ, nidχˈe ʔˈet hatijˈul lakinˈeʁet laʃavˈua habˈa.",
-   "dur": 3.38
+   "dur": 3.38,
+   "chunks": [
+    "ʔˈim jeʁˈad ɡˈeʃem maχˈaʁ, nidχˈe ʔˈet hatijˈul lakinˈeʁet laʃavˈua habˈa."
+   ]
   },
   {
    "id": "custom_cat_v2",
    "text": "החתול של השכנים שוב נכנס למטבח וגנב לנו חתיכת גבינה.",
    "voice": 2,
-   "ipa": "heχatˈul ʃˈel haʃχenˈim ʃˈuv niχnˈas lamitbˈaχ veɡanˈav lanˈu χatiχˈat ɡvinˈa.",
-   "dur": 3.97
+   "dur": 3.97,
+   "chunks": [
+    "heχatˈul ʃˈel haʃχenˈim ʃˈuv niχnˈas lamitbˈaχ veɡanˈav lanˈu χatiχˈat ɡvinˈa."
+   ]
   },
   {
    "id": "custom_meeting_v0",
    "text": "תזכורת: הפגישה עם צוות הפיתוח עברה לחדר הישיבות בקומה השלישית.",
    "voice": 0,
-   "ipa": "tizkˈoʁet hapɡiʃˈa ʔˈim tsˈevet hapitˈuaχ ʔavʁˈa laχadˈaʁ hajʃivˈot bakomˈa haʃliʃˈit.",
-   "dur": 3.78
+   "dur": 3.78,
+   "chunks": [
+    "tizkˈoʁet hapɡiʃˈa ʔˈim tsˈevet hapitˈuaχ ʔavʁˈa laχadˈaʁ hajʃivˈot bakomˈa haʃliʃˈit."
+   ]
   }
  ],
  "test": [
@@ -49,80 +61,117 @@
    "label": "Greeting",
    "text": "שלום, נעים מאוד! אני מודל דיבור עברי קטן שאומן על טי פי יו.",
    "voice": 0,
-   "ipa": "ʃalˈom, naʔˈim meʔˈod! ʔanˈi mˈodel dibˈuʁ ʔivʁˈi katˈan ʃeʔumˈan ʔˈal tˈi pˈi jˈo.",
-   "dur": 3.4
+   "dur": 3.4,
+   "chunks": [
+    "ʃalˈom, naʔˈim meʔˈod! ʔanˈi mˈodel dibˈuʁ ʔivʁˈi katˈan ʃeʔumˈan ʔˈal tˈi pˈi jˈo."
+   ]
   },
   {
    "id": "question_v1",
    "label": "Question",
    "text": "סליחה, אתה יודע איך מגיעים לתחנה המרכזית?",
    "voice": 1,
-   "ipa": "sliχˈa, ʔatˈa jodˈea ʔˈejχ maɡiʔˈim lataχanˈa hameʁkazˈit?",
-   "dur": 2.79
+   "dur": 2.79,
+   "chunks": [
+    "sliχˈa, ʔatˈa jodˈea ʔˈejχ maɡiʔˈim lataχanˈa hameʁkazˈit?"
+   ]
   },
   {
    "id": "numbers_v9",
    "label": "Numbers",
    "text": "הפגישה נקבעה ליום שלישי, בשעה שלוש וחצי, בקומה שתים עשרה.",
    "voice": 9,
-   "ipa": "hapɡiʃˈa nikbʔˈa lejˈom ʃliʃˈi, beʃaʔˈa ʃalˈoʃ vaχˈetsi, bakˈoma ʃtˈem ʔesʁˈe.",
-   "dur": 4.01
+   "dur": 4.01,
+   "chunks": [
+    "hapɡiʃˈa nikbʔˈa lejˈom ʃliʃˈi, beʃaʔˈa ʃalˈoʃ vaχˈetsi, bakˈoma ʃtˈem ʔesʁˈe."
+   ]
   },
   {
    "id": "pauses_v2",
    "label": "Comma pauses",
    "text": "קנינו לחם, חלב, ביצים, עגבניות וגבינה.",
    "voice": 2,
-   "ipa": "kanˈinu lˈeχem, χalˈav, betsˈim, ʔaɡvanijˈot uɡvinˈa.",
-   "dur": 2.96
+   "dur": 2.96,
+   "chunks": [
+    "kanˈinu lˈeχem, χalˈav, betsˈim, ʔaɡvanijˈot uɡvinˈa."
+   ]
   },
   {
    "id": "weather_v4",
    "label": "Weather",
    "text": "מחר צפוי מזג אוויר חם ויבש, עם רוחות מזרחיות בהרים.",
    "voice": 4,
-   "ipa": "maχˈaʁ tsafˈuj mˈezeɡ ʔavˈiʁ χˈam vejavˈeʃ, ʔˈim ʁuχˈot mizʁaχijˈot behaʁˈim.",
-   "dur": 3.9
+   "dur": 3.9,
+   "chunks": [
+    "maχˈaʁ tsafˈuj mˈezeɡ ʔavˈiʁ χˈam vejavˈeʃ, ʔˈim ʁuχˈot mizʁaχijˈot behaʁˈim."
+   ]
   },
   {
    "id": "long_v0",
    "label": "Long sentence",
    "text": "ביום שישי בבוקר יצאנו מתל אביב לכיוון הגליל, עצרנו לקפה בדרך, ובערב כבר ישבנו מול הכנרת וראינו את השקיעה.",
    "voice": 0,
-   "ipa": "bejˈom ʃiʃˈi babˈokeʁ jatsˈanu mitˈel ʔavˈiv leχijvˈun haɡalˈil, ʔatsˈaʁnu lekafˈe badˈeʁeχ, uvaʔˈeʁev kvˈaʁ jaʃˈavnu mˈul hakinˈeʁet veʁaʔˈinu ʔˈet haʃkiʔˈa.",
-   "dur": 6.61
+   "dur": 6.61,
+   "chunks": [
+    "bejˈom ʃiʃˈi babˈokeʁ jatsˈanu mitˈel ʔavˈiv leχijvˈun haɡalˈil, ʔatsˈaʁnu lekafˈe badˈeʁeχ, uvaʔˈeʁev kvˈaʁ jaʃˈavnu mˈul hakinˈeʁet veʁaʔˈinu ʔˈet haʃkiʔˈa."
+   ]
   },
   {
    "id": "exclaim_v1",
    "label": "Exclamation",
    "text": "איזה יופי! סוף סוף הגיע החורף.",
    "voice": 1,
-   "ipa": "ʔˈejze jˈofi! sˈof sˈof hiɡˈia haχˈoʁef.",
-   "dur": 1.82
+   "dur": 1.82,
+   "chunks": [
+    "ʔˈejze jˈofi! sˈof sˈof hiɡˈia haχˈoʁef."
+   ]
   },
   {
    "id": "news_v9",
    "label": "News style",
    "text": "ראש העירייה הודיע הערב על פתיחת קו רכבת קלה חדש בירושלים.",
    "voice": 9,
-   "ipa": "ʁˈoʃ haʔiʁijˈa hodˈia haʔeʁˈev ʔˈal ptiχˈat kˈav ʁakˈevet kalˈa χadˈaʃ biʁuʃalˈajim.",
-   "dur": 3.99
+   "dur": 3.99,
+   "chunks": [
+    "ʁˈoʃ haʔiʁijˈa hodˈia haʔeʁˈev ʔˈal ptiχˈat kˈav ʁakˈevet kalˈa χadˈaʃ biʁuʃalˈajim."
+   ]
   },
   {
    "id": "tongue_v2",
    "label": "Tongue twister",
    "text": "שרה שרה שיר שמח, שיר שמח שרה שרה.",
    "voice": 2,
-   "ipa": "saʁˈa ʃaʁˈa ʃˈiʁ samˈeaχ, ʃˈiʁ samˈeaχ ʃaʁˈa ʃaʁˈa.",
-   "dur": 3.09
+   "dur": 3.09,
+   "chunks": [
+    "saʁˈa ʃaʁˈa ʃˈiʁ samˈeaχ, ʃˈiʁ samˈeaχ ʃaʁˈa ʃaʁˈa."
+   ]
   },
   {
    "id": "tech_v4",
    "label": "Tech",
    "text": "המודל הזה מכיל שבעה מיליון פרמטרים, ורץ גם על מחשב נייד רגיל.",
    "voice": 4,
-   "ipa": "hamodˈel hazˈe meχˈil ʃivʔˈa miljˈon paʁˈametʁim, veʁˈats ɡˈam ʔˈal maχʃˈev najˈad ʁaɡˈil.",
-   "dur": 4.35
+   "dur": 4.35,
+   "chunks": [
+    "hamodˈel hazˈe meχˈil ʃivʔˈa miljˈon paʁˈametʁim, veʁˈats ɡˈam ʔˈal maχʃˈev najˈad ʁaɡˈil."
+   ]
   }
- ]
+ ],
+ "avocado": {
+  "id": "avocado_v0",
+  "text": "פעם חשבתי שבגיל הזה אני כבר אבין הכל. שתהיה לי תוכנית ברורה, שאני אדע מה אני רוצה מעצמי, שאני ארגיש... יציב. במקום זה, אני מרגיש כמו ילד בן שמונה שמתחפש למבוגר, ומקווה שאף אחד לא יעלה עליו.\nאז לקחתי את האבוקדו. הוא היה קשה כמו אבן. ואמרתי לעצמי – יאללה, נזרום. מקסימום נאכל טוסט עם גבינה לבנה. לפעמים זה כל מה שצריך, לא? להפסיק לנסות לתזמן את החיים, ופשוט לחכות שהם יבשילו.",
+  "voice": 0,
+  "chunks": [
+   "pˈaʔam χaʃˈavti ʃebaɡˈil hazˈe ʔanˈi kvˈaʁ ʔavˈin hakˈol.",
+   "ʃetihjˈe lˈi toχnˈit bʁuʁˈa, ʃeʔanˈi ʔedˈa mˈa ʔanˈi ʁotsˈe meʔatsmˈi, ʃeʔanˈi ʔaʁɡˈiʃ, jatsˈiv.",
+   "bimkˈom zˈe, ʔanˈi maʁɡˈiʃ kmˈo jˈeled bˈen ʃmˈone ʃemitχapˈes limvuɡˈaʁ, umkavˈe ʃeʔˈaf ʔeχˈad lˈo jaʔalˈe ʔalˈav.",
+   "ʔˈaz lakˈaχti ʔˈet haʔavˈokado.",
+   "hˈu hajˈa kaʃˈe kmˈo ʔˈeven.",
+   "veʔamˈaʁti leʔatsmˈi, jˈala, nizʁˈom.",
+   "maksimˈum noχˈal tˈost ʔˈim ɡvinˈa levanˈa.",
+   "lifʔamˈim zˈe kˈol mˈa ʃetsaʁˈiχ, lˈo?",
+   "lehafsˈik lenasˈot letazmˈen ʔˈet haχajˈim, ufaʃˈut leχakˈot ʃehˈem javʃilˈu."
+  ],
+  "dur": 25.84
+ }
 }

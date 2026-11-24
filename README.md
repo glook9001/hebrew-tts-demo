@@ -8,8 +8,9 @@ The page runs the four ONNX graphs (29.5 MB, float32) live in a Web Worker with 
 
 ## How text becomes speech
 1. Example sentences come with IPA made by [Phonikud](https://github.com/thewh1teagle/phonikud) (Python) when the demo was built.
-2. Typed text gets vowel marks from Horse Nikud, then `g2p.js`, a JavaScript port of Phonikud's rule-based phonemizer (matches the Python output on 40/40 test sentences given the same vowel marks), turns it into IPA. Stress and vocal shva on typed text are approximate.
-3. The encoder predicts phone durations; the causal decoder predicts 20 FARGAN features per 10 ms; the FARGAN vocoder produces 16 kHz audio, upsampled to 48 kHz for playback.
+2. Typed text is cleaned (dashes, ellipses, quotes, repeated punctuation), split into sentences, and each word is looked up in `lexicon.json` (about 8,300 words pronounced by the full Phonikud model). Other words get vowel marks from Horse Nikud, then `g2p.js`, a JavaScript port of Phonikud's rule-based phonemizer (matches the Python output on 40/40 test sentences given the same vowel marks), turns them into IPA; stress on those words is approximate. Whole numbers up to 9,999 are read out.
+3. Each sentence is synthesized separately and joined with short pauses, so long text works.
+4. The encoder predicts phone durations; the causal decoder predicts 20 FARGAN features per 10 ms; the FARGAN vocoder produces 16 kHz audio, upsampled to 48 kHz for playback.
 
 ## Files
 - `index.html`, `app.js`, `worker.js`, `g2p.js`, `style.css`: the demo.

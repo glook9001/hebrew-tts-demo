@@ -27,42 +27,36 @@
       <div><p class="step">01 / LIVE IN YOUR BROWSER</p><h2 id="studio-title">What should it say?</h2></div>
       <span id="counter"></span>
     </div>
-    <p class="hint">Pick an example or type your own Hebrew. The first run downloads about 41 MB (model plus runtime; typed text adds 5 MB for the vowel model), then the browser caches it.</p>
+    <p class="hint">Pick an example or type your own Hebrew, even a few paragraphs. The first run downloads about 41 MB, then the browser caches it.</p>
     <div id="chips" class="chips"></div>
-    <textarea id="text" dir="rtl" lang="he" rows="3" maxlength="400"></textarea>
+    <textarea id="text" dir="rtl" lang="he" rows="4" maxlength="2000"></textarea>
     <div class="controls">
       <label class="field">Voice
         <select id="voice"></select>
       </label>
-      <label class="speed-control" for="speed"><span>Speed <output id="speed-value">1.0×</output></span>
-        <input id="speed" type="range" min="0.7" max="1.4" value="1" step="0.05" /></label>
-      <button id="speak" type="button"><span class="button-icon" aria-hidden="true">▶</span><span class="button-label">Generate speech</span></button>
+      <label class="speed-control" for="speed"><span>Speed <output id="speed-value">1.00×</output></span>
+        <input id="speed" type="range" min="0.75" max="1.3" value="1" step="0.05" /></label>
+      <button id="speak" type="button"><span class="button-icon" aria-hidden="true">▶</span><span class="button-label">Speak</span></button>
     </div>
-    <div id="status" class="status" role="status" aria-live="polite"><span class="status-dot"></span><span>Ready. The model loads on your first generation.</span></div>
+    <div id="status" class="status" role="status" aria-live="polite"><span class="status-dot"></span><span>Ready. The model loads on your first run.</span></div>
     <div id="player" class="player" hidden>
-      <audio id="audio" controls playsinline></audio>
+      <audio id="audio" controls playsinline preload="auto"></audio>
       <a id="download" download="pivo-hebrew.wav">Download WAV</a>
-      <p id="ipa" class="ipa"></p>
+      <details class="ipa-box"><summary>Show phonemes</summary><p id="ipa" class="ipa"></p></details>
     </div>
+    <p class="hint small">On iPhone, if you hear nothing, check that the side switch is not on silent and the volume is up.</p>
   </section>
 
   <section class="gallery">
-    <p class="step">02 / CUSTOM TEXT, UNSEEN IN TRAINING</p>
-    <h2>New sentences the model never heard</h2>
-    <p class="hint">Written for this demo and checked against the SASPEECH transcripts we could access; none appear there. Pre-rendered MP3s, so they play anywhere.</p>
-    <div id="custom" class="cards"></div>
-  </section>
-
-  <section class="gallery">
-    <p class="step">03 / REAL SPEECH VS V3</p>
-    <h2>Same text, human vs model</h2>
-    <div id="compare" class="cards"></div>
-  </section>
-
-  <section class="gallery">
-    <p class="step">04 / MORE SAMPLES</p>
-    <h2>Test sentences, voices and a news memo</h2>
-    <div id="more" class="cards"></div>
+    <p class="step">02 / LISTEN</p>
+    <h2>Pre-rendered samples</h2>
+    <p class="hint">MP3s made with the same model, so they play anywhere.</p>
+    <details open><summary>Custom text, unseen in training (6)</summary>
+      <p class="hint">Written for this demo; none of these sentences appear in the SASPEECH transcripts we checked.</p>
+      <div id="custom" class="cards"></div></details>
+    <details><summary>A longer monologue (26 s)</summary><div id="long" class="cards"></div></details>
+    <details><summary>Real speech vs v3, and v2 vs v3</summary><div id="compare" class="cards"></div></details>
+    <details><summary>More test sentences and a news memo</summary><div id="more" class="cards"></div></details>
   </section>
 
   <section class="about">
@@ -70,8 +64,8 @@
     <ul>
       <li><b>Model:</b> PiVo-TPU-7M Hebrew v3: 6,511,317 acoustic + 816,597 FARGAN vocoder parameters (7,327,914 total). ONNX files on device: 29.5 MB (float32).</li>
       <li><b>Training:</b> about 11.5 h of Hebrew speech (SASPEECH), 20-dim FARGAN features at 16 kHz, trained on a Kaggle TPU v5e-8.</li>
-      <li><b>Text:</b> example sentences were phonemized with <a href="https://github.com/thewh1teagle/phonikud">Phonikud</a> (CC BY 4.0). Typed text uses Horse Nikud for vowel marks plus a JavaScript port of Phonikud's rules (CC BY 4.0), so stress on typed text is approximate.</li>
-      <li><b>Limits:</b> an experimental research model: some speech sounds muffled or buzzy, pitch is fairly flat, and commas get short pauses. Numbers should be written as words.</li>
+      <li><b>Text:</b> example sentences were phonemized with <a href="https://github.com/thewh1teagle/phonikud">Phonikud</a> (CC BY 4.0). Typed text first uses a word list of about 8,300 words pre-pronounced by Phonikud; other words get vowel marks from Horse Nikud and a JavaScript port of Phonikud's rules (CC BY 4.0), where stress is approximate. Long text is split into sentences and spoken part by part.</li>
+      <li><b>Limits:</b> an experimental research model: some speech sounds muffled or buzzy, pitch is fairly flat, and commas get short pauses. Whole numbers up to 9,999 are read out; other numbers should be written as words.</li>
     </ul>
     <p class="credits">Based on <a href="https://huggingface.co/empero-ai/PiVo-1.4M">PiVo-1.4M</a> by Empero Research (Apache-2.0; FARGAN vocoder under the Xiph/Opus BSD license, see <a href="model/NOTICE">NOTICE</a>, <a href="model/THIRD_PARTY.md">THIRD_PARTY.md</a>). Page design inspired by <a href="https://github.com/ldenoue/PiVo-1.4M-web">ldenoue/PiVo-1.4M-web</a>. Runs on <a href="https://onnxruntime.ai/">ONNX Runtime Web</a>. Reference recordings from <a href="https://huggingface.co/datasets/upai-inc/saspeech">SASPEECH</a>. Hebrew vowel marks: Powered by Horse Models (<a href="https://2008-horse.com/licensing/">https://2008-horse.com/licensing/</a>), non-commercial use, <a href="vendor/horse-nikud/LICENSE">license</a>.</p>
   </section>

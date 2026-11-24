@@ -27,3 +27,7 @@ select{font:inherit;font-size:15px;padding:8px 10px;border-radius:10px;border:1p
 .card-text{font-size:17px;line-height:1.45;margin:0;flex:1}.card-note{font-size:12px;color:var(--muted);margin:0}
 .about ul{padding-inline-start:18px;line-height:1.55}.credits{font-size:13px;color:var(--muted);line-height:1.6}
 footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px}
+details{border-top:1px solid var(--line);padding:12px 0}details:first-of-type{border-top:0}
+summary{cursor:pointer;font-weight:700;font-size:16px;list-style-position:inside}
+.ipa-box summary{font-weight:500;font-size:13px;color:var(--muted)}
+.hint.small{font-size:12px;margin-top:14px}
