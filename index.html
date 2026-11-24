@@ -27,15 +27,13 @@
       <div><p class="step">01 / LIVE IN YOUR BROWSER</p><h2 id="studio-title">What should it say?</h2></div>
       <span id="counter"></span>
     </div>
-    <p class="hint">Pick an example or type your own Hebrew, even a few paragraphs. The first run downloads about 41 MB, then the browser caches it.</p>
+    <p class="hint">Pick an example or type your own Hebrew, even a few paragraphs. The first run downloads about 62 MB, then the browser caches it.</p>
     <div id="chips" class="chips"></div>
     <textarea id="text" dir="rtl" lang="he" rows="4" maxlength="2000"></textarea>
     <div class="controls">
       <label class="field">Voice
         <select id="voice"></select>
       </label>
-      <label class="speed-control" for="speed"><span>Speed <output id="speed-value">1.00×</output></span>
-        <input id="speed" type="range" min="0.75" max="1.3" value="1" step="0.05" /></label>
       <button id="speak" type="button"><span class="button-icon" aria-hidden="true">▶</span><span class="button-label">Speak</span></button>
     </div>
     <div id="status" class="status" role="status" aria-live="polite"><span class="status-dot"></span><span>Ready. The model loads on your first run.</span></div>
@@ -64,10 +62,10 @@
     <ul>
       <li><b>Model:</b> PiVo-TPU-7M Hebrew v3: 6,511,317 acoustic + 816,597 FARGAN vocoder parameters (7,327,914 total). ONNX files on device: 29.5 MB (float32).</li>
       <li><b>Training:</b> about 11.5 h of Hebrew speech (SASPEECH), 20-dim FARGAN features at 16 kHz, trained on a Kaggle TPU v5e-8.</li>
-      <li><b>Text:</b> example sentences were phonemized with <a href="https://github.com/thewh1teagle/phonikud">Phonikud</a> (CC BY 4.0). Typed text first uses a word list of about 8,300 words pre-pronounced by Phonikud; other words get vowel marks from Horse Nikud and a JavaScript port of Phonikud's rules (CC BY 4.0), where stress is approximate. Long text is split into sentences and spoken part by part.</li>
-      <li><b>Limits:</b> an experimental research model: some speech sounds muffled or buzzy, pitch is fairly flat, and commas get short pauses. Whole numbers up to 9,999 are read out; other numbers should be written as words.</li>
+      <li><b>Text:</b> typed text is read by <a href="https://github.com/thewh1teagle/renikud">ReNikud</a> (CC BY 4.0), a 20.6 MB Hebrew pronunciation model that runs in your browser and predicts vowels and stress from the whole sentence. Numbers, dates, times, prices, common abbreviations and English words are read out. Speech pauses at punctuation and at clause boundaries, and yes/no questions rise at the end. Vowel points (niqqud) you type are respected.</li>
+      <li><b>Limits:</b> an experimental research model: some speech sounds muffled or buzzy, and pitch is fairly flat. About 1 word in 8 may still be mispronounced, mostly names, slang and rare loanwords. Adding niqqud to a word fixes its pronunciation.</li>
     </ul>
-    <p class="credits">Based on <a href="https://huggingface.co/empero-ai/PiVo-1.4M">PiVo-1.4M</a> by Empero Research (Apache-2.0; FARGAN vocoder under the Xiph/Opus BSD license, see <a href="model/NOTICE">NOTICE</a>, <a href="model/THIRD_PARTY.md">THIRD_PARTY.md</a>). Page design inspired by <a href="https://github.com/ldenoue/PiVo-1.4M-web">ldenoue/PiVo-1.4M-web</a>. Runs on <a href="https://onnxruntime.ai/">ONNX Runtime Web</a>. Reference recordings from <a href="https://huggingface.co/datasets/upai-inc/saspeech">SASPEECH</a>. Hebrew vowel marks: Powered by Horse Models (<a href="https://2008-horse.com/licensing/">https://2008-horse.com/licensing/</a>), non-commercial use, <a href="vendor/horse-nikud/LICENSE">license</a>.</p>
+    <p class="credits">Based on <a href="https://huggingface.co/empero-ai/PiVo-1.4M">PiVo-1.4M</a> by Empero Research (Apache-2.0; FARGAN vocoder under the Xiph/Opus BSD license, see <a href="model/NOTICE">NOTICE</a>, <a href="model/THIRD_PARTY.md">THIRD_PARTY.md</a>). Page design inspired by <a href="https://github.com/ldenoue/PiVo-1.4M-web">ldenoue/PiVo-1.4M-web</a>. Runs on <a href="https://onnxruntime.ai/">ONNX Runtime Web</a>. Reference recordings from <a href="https://huggingface.co/datasets/upai-inc/saspeech">SASPEECH</a>. Pronunciation: <a href="https://huggingface.co/renikud/renikud">ReNikud</a> by Melichov, Kolani and Alper (CC BY 4.0).</p>
   </section>
   <footer><p>Live inference · WebAssembly · 16 kHz model audio</p></footer>
 </main>
